@@ -1,4 +1,4 @@
 #! /usr/bin/sh
 
-gcc src/*.c -o olive
+gcc -I src/include/ src/*.c src/include/*.c -o olive
 ./olive
