@@ -3,7 +3,8 @@
 
 #include "message.h"
 #include "utils.h"
+#include <stdbool.h>
 
-response send_message(message msg);
+void send_message(message msg);
 
 #endif // CLIENT_H_

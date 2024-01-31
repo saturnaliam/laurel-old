@@ -12,7 +12,6 @@ void sanitize_string(char **input);
 void run_input(char *input);
 
 void run_repl() {
-
   while (1) {
     char *input = (char*)malloc(INPUT_LENGTH* sizeof(char));
     printf(">> ");
@@ -52,11 +51,17 @@ void run_input(char *input) {
     send_message((message){ .header = header });
   }
 
-  if (argument == NULL) return;
-  header.body_length = strlen(argument);
-
   if (strcmp(command, "play") == 0) {
+    if (argument == NULL) {
+      panic("argument required!");
+      return;
+    }
+
+    header.body_length = strlen(argument);
     header.command_type = 'p';
+  } else {
+    panic("unknown command!");
+    return;
   }
 
   message msg = { .header = header, .body = argument };
