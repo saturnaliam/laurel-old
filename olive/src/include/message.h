@@ -3,7 +3,7 @@
 
 #include "utils.h"
 
-#define BODY_SIZE 127
+#define BODY_SIZE 12
 #define RESPONSE_SIZE 255
 
 typedef enum {

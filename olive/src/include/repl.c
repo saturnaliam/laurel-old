@@ -18,6 +18,7 @@ void run_repl() {
 
     fgets(input, INPUT_LENGTH, stdin);
     sanitize_string(&input);
+
     run_input(input);
     free(input);
   }
@@ -49,6 +50,16 @@ void run_input(char *input) {
   } else if (strcmp(command, "pause") == 0) {
     header.command_type = 's';
     send_message((message_t){ .header = header });
+    return;
+  }
+
+  if (argument != NULL && strlen(argument) > BODY_SIZE) {
+    char *err = (char*)malloc((strlen("maximum command length is  !") + 3) * sizeof(char));
+    strcpy(err, "maximum command length is ");
+    sprintf(err, "%s%d!", err, BODY_SIZE);
+    panic(err);
+    free(err);
+    return;
   }
 
   if (strcmp(command, "play") == 0) {

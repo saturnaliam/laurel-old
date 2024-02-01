@@ -1,9 +1,12 @@
 #include "client.h"
 #include "message.h"
+#include <c++/13.2.1/bits/fs_fwd.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 response_t send_to_server(u64 *data);
 bool response_handler(response_t res);
+char* serialize(message_t message);
 
 void print_header(message_header_t *header) {
   printf("Magic Number: %s\n", header->magic_number);
@@ -22,6 +25,7 @@ void send_message(message_t message) {
 // TODO ensure server connection
 // TODO send data
 // TODO parse response
+  serialize(message);
   print_message(&message);
 }
 
@@ -30,4 +34,23 @@ bool response_handler(response_t res) {
 
   panic(res.body);
   return false;
+}
+
+char* serialize(message_t message) {
+  size_t char_field_sizes = (3 + 1 + 127) * sizeof(char);
+  size_t u8_field_sizes = 2 * sizeof(u8);
+  char *values = (char*)malloc(char_field_sizes + u8_field_sizes + sizeof(u16));
+
+  // TODO unhardcode
+
+  // serializing header
+  sprintf(values, "%s%s\t", values, message.header.magic_number);
+  sprintf(values, "%s%u\t", values, message.header.version);
+  sprintf(values, "%s%c\t", values, message.header.command_type);
+  sprintf(values, "%s%u", values, message.header.body_length);
+
+  // serializing body
+  if (message.body != NULL) sprintf(values, "%s\t%s", values, message.body);
+
+  printf("%s\n", values);
 }
