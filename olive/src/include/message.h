@@ -13,7 +13,7 @@ UNAUTHORIZED = 401,
 PRECONDITION_FAILED = 412,
 PAYLOAD_TOO_LARGE = 413,
 NOT_IMPLEMENTED = 501,
-} response_code;
+} response_code_t;
 
 typedef struct {
   char magic_number[3];
@@ -21,16 +21,16 @@ typedef struct {
   char command_type;
   u8 body_length;
   u16 padding_bytes;
-} message_header;
+} message_header_t;
 
 typedef struct {
-  message_header header;
+  message_header_t header;
   char *body;
-} message;
+} message_t;
 
 typedef struct {
-  response_code code;
+  response_code_t code;
   char *body;
-} response;
+} response_t;
 
 #endif

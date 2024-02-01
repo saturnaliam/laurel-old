@@ -5,6 +5,6 @@
 #include "utils.h"
 #include <stdbool.h>
 
-void send_message(message msg);
+void send_message(message_t message);
 
 #endif // CLIENT_H_

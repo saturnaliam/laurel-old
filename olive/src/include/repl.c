@@ -42,13 +42,13 @@ void run_input(char *input) {
   char *argument = strtok(NULL, " ");
   if (command == NULL) return;
 
-  message_header header = { .magic_number = "LRL", .version = 0 };
+  message_header_t header = { .magic_number = "LRL", .version = 0 };
 
   if (strcmp(command, "exit") == 0) {
     exit(0);
   } else if (strcmp(command, "pause") == 0) {
     header.command_type = 's';
-    send_message((message){ .header = header });
+    send_message((message_t){ .header = header });
   }
 
   if (strcmp(command, "play") == 0) {
@@ -64,6 +64,6 @@ void run_input(char *input) {
     return;
   }
 
-  message msg = { .header = header, .body = argument };
+  message_t msg = { .header = header, .body = argument };
   send_message(msg);
 }

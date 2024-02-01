@@ -2,32 +2,30 @@
 #include "message.h"
 #include <stdio.h>
 
-response send_to_server(u64 *data);
-bool response_handler(response res);
+response_t send_to_server(u64 *data);
+bool response_handler(response_t res);
 
-void print_header(message_header *header) {
+void print_header(message_header_t *header) {
   printf("Magic Number: %s\n", header->magic_number);
   printf("Version: %d\n", header->version);
   printf("Command Type: %c\n", header->command_type);
   printf("Body Length: %d\n", header->body_length);
 }
 
-void print_message(message *msg) {
-  print_header(&msg->header);
-  printf("Body: %s\n", msg->body);
+void print_message(message_t *message) {
+  print_header(&message->header);
+  printf("Body: %s\n", message->body);
 }
 
-void send_message(message msg) {
+void send_message(message_t message) {
 // TODO serialize message
 // TODO ensure server connection
 // TODO send data
 // TODO parse response
-  response res = { .code = UNAUTHORIZED, .body = "unauthed" };
-  if (!response_handler(res)) return;
-  print_message(&msg);
+  print_message(&message);
 }
 
-bool response_handler(response res) {
+bool response_handler(response_t res) {
   if (res.code == OK) return true;
 
   panic(res.body);
