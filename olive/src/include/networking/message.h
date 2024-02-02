@@ -1,7 +1,7 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
-#include "utils.h"
+#include "../utils.h"
 
 #define BODY_SIZE 12
 #define RESPONSE_SIZE 255

@@ -3,8 +3,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "client.h"
-#include "message.h"
+
+#include "networking.h"
 #include "utils.h"
 
 void run_repl();
