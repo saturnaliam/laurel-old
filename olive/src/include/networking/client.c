@@ -23,8 +23,10 @@ void send_message(message_t message) {
 // TODO send data
 // TODO parse response
   char *serialized = serialize_message(&message);
-  printf("%s\n", serialized);
-
+  //printf("%s\n", serialized);
+  
+  message_t msg = deserialize_message(serialized);
+  print_message(&msg);
 
   free(serialized);
 }

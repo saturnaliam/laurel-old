@@ -23,3 +23,42 @@ char* serialize_message(const message_t *message) {
 
   return serialized;
 }
+
+// TODO add limits to make sure the message doesn't go over the allowed limit
+message_t deserialize_message(const char *input) {
+  char *buffer = (char*)malloc(sizeof(input));
+  strcpy(buffer, input);
+
+  message_t message;
+
+  char* token = strtok(buffer, "\t");
+  strcpy(message.header.magic_number, token);
+
+  size_t itr = 0;
+  while (token != NULL) {
+    token = strtok(NULL, "\t");
+
+    // silly hardcoded stuff
+    switch (itr) {
+      case 0:
+        message.header.version = atoi(token);
+        break;
+      case 1:
+        message.header.command_type = token[0];
+        break;
+      case 2:
+        message.header.body_length = atoi(token);
+        break;
+      case 3:
+        strcpy(message.body, token);
+        break;
+
+      default:
+        break;
+    }
+
+    itr++;
+  }
+
+  return message;
+}
